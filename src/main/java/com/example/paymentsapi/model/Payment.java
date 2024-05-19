@@ -12,18 +12,20 @@ public class Payment {
     private long amount;
     private int decimals;
     private PaymentStatus status;
-    private String clientName;
+    private PaymentType type;
+    private int accountId;
     private long createdAt;
 
     public Payment() {
     }
 
-    public Payment(UUID id, long amount, int decimals, PaymentStatus status, String clientName, long createdAt) {
+    public Payment(UUID id, long amount, int decimals, PaymentStatus status, PaymentType type, int accountId, long createdAt) {
         this.id = id;
         this.amount = amount;
         this.decimals = decimals;
         this.status = status;
-        this.clientName = clientName;
+        this.type = type;
+        this.accountId = accountId;
         this.createdAt = createdAt;
     }
 
@@ -59,19 +61,27 @@ public class Payment {
         this.status = status;
     }
 
-    public String getClientName() {
-        return clientName;
-    }
-
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
-    }
-
     public long getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(long created_at) {
         this.createdAt = created_at;
+    }
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
+
+    public PaymentType getType() {
+        return type;
+    }
+
+    public void setType(PaymentType type) {
+        this.type = type;
     }
 }

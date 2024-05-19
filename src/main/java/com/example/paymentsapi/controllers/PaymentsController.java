@@ -1,7 +1,6 @@
 package com.example.paymentsapi.controllers;
 
 import com.example.paymentsapi.http.requests.CreatePaymentRequest;
-import com.example.paymentsapi.http.requests.UpdatePaymentRequest;
 import com.example.paymentsapi.model.*;
 import com.example.paymentsapi.services.PaymentService;
 import com.example.paymentsapi.utils.PaymentNotFoundException;
@@ -33,7 +32,7 @@ public class PaymentsController {
         Pageable pageable = PageRequest.of(
                 pageNumber - 1,
                 pageSize,
-                Sort.by("createdAt").descending().and(Sort.by("clientName")));
+                Sort.by("createdAt").descending());
         return paymentService.getAll(pageable);
     }
 
@@ -55,18 +54,24 @@ public class PaymentsController {
     @PostMapping
     @Operation(summary = "Create a payment")
     public Payment createPayment(@RequestBody final CreatePaymentRequest request) {
-        return paymentService.create(request.amount(), request.clientName());
+        return paymentService.create(request.amount(), request.accountId(), request.type());
     }
 
-    @PutMapping("{id}")
+    @PutMapping("{id}/cancel")
+    @Operation(summary = "Cancel the payment")
+    public Payment cancelPayment(@PathVariable UUID id) {
+        return paymentService.cancel(id);
+    }
+
+    @PutMapping("{id}/commit")
     @Operation(summary = "Update the payment")
-    public Payment updatePayment(@PathVariable UUID id, @RequestBody final UpdatePaymentRequest request) {
-        return paymentService.update(id, request.status());
+    public Payment commitPayment(@PathVariable UUID id) {
+        return paymentService.commit(id);
     }
 
     @DeleteMapping("{id}")
     @Operation(summary = "Delete the payment")
-    public void updatePayment(@PathVariable UUID id) {
+    public void deletePayment(@PathVariable UUID id) {
         paymentService.delete(id);
     }
 }
