@@ -28,10 +28,10 @@ public class PaymentsController {
     @GetMapping
     @Operation(summary = "List payments")
     public Payment[] listPayments(
-            @RequestParam(required = false, defaultValue = "0") Integer pageNumber,
+            @RequestParam(required = false, defaultValue = "1") Integer pageNumber,
             @RequestParam(required = false, defaultValue = "20") Integer pageSize) {
         Pageable pageable = PageRequest.of(
-                pageNumber,
+                pageNumber - 1,
                 pageSize,
                 Sort.by("createdAt").descending().and(Sort.by("clientName")));
         return paymentService.getAll(pageable);

@@ -26,7 +26,7 @@ public class PaymentService {
 
     public Payment[] getAll(Pageable pageable) {
         Page<Payment> page = paymentRepository.findAll(pageable);
-        return page.stream().toArray(p -> new Payment[page.getTotalPages()]);
+        return page.stream().toArray(p -> new Payment[page.getNumberOfElements()]);
     }
 
     public Payment create(DecimalNumber amount, String clientName) {
